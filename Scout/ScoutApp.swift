@@ -6,6 +6,7 @@ struct ScoutApp: App {
 		WindowGroup {
 			RootView()
 				.environmentObject(Game())
+				.preferredColorScheme(.dark)
 		}
 	}
 }

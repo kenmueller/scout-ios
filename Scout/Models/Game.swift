@@ -75,9 +75,26 @@ final class Game: ObservableObject {
 		task?.resume()
 		
 		do {
+			ping()
 			try sendInit()
 		} catch {
 			print(error)
+		}
+	}
+	
+	func ping() {
+		var timer: Timer?
+		
+		timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
+			guard let task = self?.task else {
+				timer?.invalidate()
+				return
+			}
+			
+			task.sendPing { error in
+				guard let error = error else { return }
+				print(error)
+			}
 		}
 	}
 	
@@ -149,12 +166,11 @@ final class Game: ObservableObject {
 	}
 	
 	func onReceive(_ result: Result<URLSessionWebSocketTask.Message, Error>) {
+		task?.receive(completionHandler: onReceive)
+		
 		switch result {
-		case let .success(message):
-			task?.receive(completionHandler: onReceive)
-			onMessage(message)
-		case let .failure(error):
-			print(error)
+		case let .success(message): onMessage(message)
+		case let .failure(error): print(error)
 		}
 	}
 	
