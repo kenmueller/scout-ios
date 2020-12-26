@@ -7,6 +7,14 @@ final class Game: ObservableObject {
 		let seeker: UUID
 	}
 	
+	struct RestartRequest: Encodable {
+		let restart = true
+	}
+	
+	struct RestartResponse: Decodable {
+		let restart: Bool
+	}
+	
 	let id = UUID()
 	
 	@Published private(set) var state = State.initial
@@ -45,6 +53,10 @@ final class Game: ObservableObject {
 	var seeker: User? {
 		guard let id = seekerId else { return nil }
 		return users?.first { $0.id == id }
+	}
+	
+	var canRestart: Bool {
+		isSeeker && users?.allSatisfy(\.found) ?? false
 	}
 	
 	func isHider(_ user: User) -> Bool {
@@ -122,6 +134,20 @@ final class Game: ObservableObject {
 		}
 	}
 	
+	func restart() {
+		do {
+			try send(RestartRequest())
+		} catch {
+			print(error)
+		}
+	}
+	
+	func onRestart() {
+		state = .joined
+		ready = false
+		found = false
+	}
+	
 	func onReceive(_ result: Result<URLSessionWebSocketTask.Message, Error>) {
 		switch result {
 		case let .success(message):
@@ -151,6 +177,8 @@ final class Game: ObservableObject {
 			Audio.shared.play(fileNamed: "Ping.mp3")
 		} else if (try? decoder.decode(User.Found.self, from: data)) != nil {
 			DispatchQueue.main.async { self.found = true }
+		} else if (try? decoder.decode(RestartResponse.self, from: data)) != nil {
+			DispatchQueue.main.async(execute: onRestart)
 		}
 	}
 	

@@ -80,6 +80,17 @@ struct StartedView: View {
 					}
 				}
 				.padding(.top, 12)
+				if game.canRestart {
+					Button(action: game.restart) {
+						Text("New game")
+							.bold()
+							.padding(.horizontal, 20)
+							.padding(.vertical, 8)
+							.background(Color(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)))
+							.cornerRadius(8)
+							.padding(.top, 12)
+					}
+				}
 			}
 		}
 	}
