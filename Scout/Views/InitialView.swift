@@ -6,7 +6,8 @@ struct InitialView: View {
 	var body: some View {
 		VStack {
 			Text("Scout: Hide and Seek")
-				.font(.system(size: 24, weight: .bold))
+				.font(.title)
+				.bold()
 			TextField("Name", text: $game.name)
 				.padding(.horizontal, 8)
 				.padding(.vertical, 4)
@@ -15,9 +16,9 @@ struct InitialView: View {
 				.padding(.vertical, 12)
 			Button(action: game.join) {
 				Text("Next")
+					.bold()
 					.padding(.horizontal, 20)
 					.padding(.vertical, 8)
-					.font(.system(size: 16, weight: .bold))
 					.background(Color(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)))
 					.cornerRadius(8)
 			}

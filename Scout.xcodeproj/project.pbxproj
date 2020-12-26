@@ -3,18 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D04FE6F2596DE1500F41205 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D04FE6E2596DE1500F41205 /* constants.swift */; };
+		4D04FE6F2596DE1500F41205 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D04FE6E2596DE1500F41205 /* Constants.swift */; };
+		4D04FE762597060300F41205 /* Ping.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D04FE752597060300F41205 /* Ping.mp3 */; };
+		4D04FE792597064C00F41205 /* Start.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D04FE782597062E00F41205 /* Start.mp3 */; };
+		4D04FE7D259707FD00F41205 /* Audio in Frameworks */ = {isa = PBXBuildFile; productRef = 4D04FE7C259707FD00F41205 /* Audio */; };
 		4D275AD72596ADEF00117C9E /* ScoutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D275AD62596ADEF00117C9E /* ScoutApp.swift */; };
 		4D275AD92596ADEF00117C9E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D275AD82596ADEF00117C9E /* RootView.swift */; };
 		4D275ADB2596ADF000117C9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D275ADA2596ADF000117C9E /* Assets.xcassets */; };
 		4D275ADE2596ADF000117C9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D275ADD2596ADF000117C9E /* Preview Assets.xcassets */; };
 		4DBDEF322596AFBD00CADC4C /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF312596AFBD00CADC4C /* Game.swift */; };
 		4DBDEF462596B0A600CADC4C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF452596B0A600CADC4C /* User.swift */; };
-		4DBDEF492596BCC400CADC4C /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF482596BCC400CADC4C /* global.swift */; };
+		4DBDEF492596BCC400CADC4C /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF482596BCC400CADC4C /* Global.swift */; };
 		4DBDEF4E2596D41200CADC4C /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF4D2596D41200CADC4C /* GameState.swift */; };
 		4DBDEF522596D54500CADC4C /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF512596D54500CADC4C /* InitialView.swift */; };
 		4DBDEF552596D5C400CADC4C /* JoinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF542596D5C400CADC4C /* JoinedView.swift */; };
@@ -22,7 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D04FE6E2596DE1500F41205 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+		4D04FE6E2596DE1500F41205 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4D04FE752597060300F41205 /* Ping.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Ping.mp3; sourceTree = "<group>"; };
+		4D04FE782597062E00F41205 /* Start.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Start.mp3; sourceTree = "<group>"; };
 		4D275AD32596ADEF00117C9E /* Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D275AD62596ADEF00117C9E /* ScoutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoutApp.swift; sourceTree = "<group>"; };
 		4D275AD82596ADEF00117C9E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -31,7 +36,7 @@
 		4D275ADF2596ADF000117C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DBDEF312596AFBD00CADC4C /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		4DBDEF452596B0A600CADC4C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		4DBDEF482596BCC400CADC4C /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
+		4DBDEF482596BCC400CADC4C /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		4DBDEF4D2596D41200CADC4C /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		4DBDEF512596D54500CADC4C /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
 		4DBDEF542596D5C400CADC4C /* JoinedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinedView.swift; sourceTree = "<group>"; };
@@ -43,12 +48,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D04FE7D259707FD00F41205 /* Audio in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D04FE72259705DD00F41205 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				4D04FE782597062E00F41205 /* Start.mp3 */,
+				4D04FE752597060300F41205 /* Ping.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		4D275ACA2596ADEF00117C9E = {
 			isa = PBXGroup;
 			children = (
@@ -68,9 +83,10 @@
 		4D275AD52596ADEF00117C9E /* Scout */ = {
 			isa = PBXGroup;
 			children = (
-				4D04FE6E2596DE1500F41205 /* constants.swift */,
-				4DBDEF482596BCC400CADC4C /* global.swift */,
+				4D04FE6E2596DE1500F41205 /* Constants.swift */,
+				4DBDEF482596BCC400CADC4C /* Global.swift */,
 				4D275AD62596ADEF00117C9E /* ScoutApp.swift */,
+				4D04FE72259705DD00F41205 /* Sounds */,
 				4DBDEF302596AF5800CADC4C /* Models */,
 				4DBDEF2E2596AE7700CADC4C /* Views */,
 				4D275ADA2596ADF000117C9E /* Assets.xcassets */,
@@ -125,6 +141,9 @@
 			dependencies = (
 			);
 			name = Scout;
+			packageProductDependencies = (
+				4D04FE7C259707FD00F41205 /* Audio */,
+			);
 			productName = Scout;
 			productReference = 4D275AD32596ADEF00117C9E /* Scout.app */;
 			productType = "com.apple.product-type.application";
@@ -152,6 +171,9 @@
 				Base,
 			);
 			mainGroup = 4D275ACA2596ADEF00117C9E;
+			packageReferences = (
+				4D04FE7B259707FD00F41205 /* XCRemoteSwiftPackageReference "Audio" */,
+			);
 			productRefGroup = 4D275AD42596ADEF00117C9E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -167,7 +189,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D275ADE2596ADF000117C9E /* Preview Assets.xcassets in Resources */,
+				4D04FE792597064C00F41205 /* Start.mp3 in Resources */,
 				4D275ADB2596ADF000117C9E /* Assets.xcassets in Resources */,
+				4D04FE762597060300F41205 /* Ping.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,12 +205,12 @@
 				4DBDEF582596D5D700CADC4C /* StartedView.swift in Sources */,
 				4DBDEF462596B0A600CADC4C /* User.swift in Sources */,
 				4DBDEF322596AFBD00CADC4C /* Game.swift in Sources */,
-				4D04FE6F2596DE1500F41205 /* constants.swift in Sources */,
+				4D04FE6F2596DE1500F41205 /* Constants.swift in Sources */,
 				4D275AD92596ADEF00117C9E /* RootView.swift in Sources */,
 				4DBDEF4E2596D41200CADC4C /* GameState.swift in Sources */,
 				4D275AD72596ADEF00117C9E /* ScoutApp.swift in Sources */,
 				4DBDEF522596D54500CADC4C /* InitialView.swift in Sources */,
-				4DBDEF492596BCC400CADC4C /* global.swift in Sources */,
+				4DBDEF492596BCC400CADC4C /* Global.swift in Sources */,
 				4DBDEF552596D5C400CADC4C /* JoinedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +400,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4D04FE7B259707FD00F41205 /* XCRemoteSwiftPackageReference "Audio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kenmueller/Audio.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4D04FE7C259707FD00F41205 /* Audio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D04FE7B259707FD00F41205 /* XCRemoteSwiftPackageReference "Audio" */;
+			productName = Audio;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4D275ACB2596ADEF00117C9E /* Project object */;
 }

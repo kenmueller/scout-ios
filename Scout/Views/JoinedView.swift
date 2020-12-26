@@ -6,7 +6,8 @@ struct JoinedView: View {
 	var body: some View {
 		VStack {
 			Text("Players")
-				.font(.system(size: 24, weight: .bold))
+				.font(.title)
+				.bold()
 			VStack(spacing: 8) {
 				if let users = game.users {
 					HStack(spacing: 0) {
@@ -15,7 +16,7 @@ struct JoinedView: View {
 							.opacity(0.7)
 						Spacer(minLength: 8)
 						Text(game.ready ? "Ready" : "Not ready")
-							.font(.system(size: 16, weight: .bold))
+							.bold()
 							.foregroundColor(game.ready ? .green : .red)
 					}
 					ForEach(users) { user in
@@ -23,7 +24,7 @@ struct JoinedView: View {
 							Text(user.name)
 							Spacer(minLength: 8)
 							Text(user.ready ? "Ready" : "Not ready")
-								.font(.system(size: 16, weight: .bold))
+								.bold()
 								.foregroundColor(user.ready ? .green : .red)
 						}
 					}
@@ -34,9 +35,9 @@ struct JoinedView: View {
 			.padding(.vertical, 12)
 			Button(action: game.toggleReady) {
 				Text(game.ready ? "Ready" : "Not ready")
+					.bold()
 					.padding(.horizontal, 20)
 					.padding(.vertical, 8)
-					.font(.system(size: 16, weight: .bold))
 					.background(game.ready ? Color.green : Color.red)
 					.cornerRadius(8)
 			}

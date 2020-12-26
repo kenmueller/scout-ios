@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Audio",
+        "repositoryURL": "https://github.com/kenmueller/Audio.git",
+        "state": {
+          "branch": "master",
+          "revision": "c0b7ea48b42d18849179ad6fda6ca7a79a88cebd",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

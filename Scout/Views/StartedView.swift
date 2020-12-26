@@ -5,44 +5,82 @@ struct StartedView: View {
 	
 	var body: some View {
 		VStack {
-			Text(game.isSeeker ? "Seeker" : "Hider")
-				.font(.system(size: 24, weight: .bold))
-				.foregroundColor(game.isSeeker ? .init(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)) : .green)
-			VStack(spacing: 8) {
-				if let users = game.users {
-					HStack(spacing: 0) {
-						Text(game.name)
-						Text(" (you)")
-							.opacity(0.7)
-						Spacer(minLength: 8)
-						Text(game.ready ? "Ready" : "Not ready")
-							.font(.system(size: 16, weight: .bold))
-							.foregroundColor(game.ready ? .green : .red)
-					}
-					ForEach(users) { user in
-						HStack(spacing: 0) {
-							Text(user.name)
-							Spacer(minLength: 8)
-							Text(user.ready ? "Ready" : "Not ready")
-								.font(.system(size: 16, weight: .bold))
-								.foregroundColor(user.ready ? .green : .red)
+			Text(
+				game.isSeeker
+					? "Seeker"
+					: game.found ? "You've been found!" : "Hider"
+			)
+			.font(.title)
+			.bold()
+			.foregroundColor(game.isSeeker ? .red : .green)
+			if let seconds = game.countdownSecondsRemaining {
+				Text(String(seconds))
+					.font(.largeTitle)
+					.bold()
+					.padding(.top, 16)
+			} else {
+				VStack(spacing: 8) {
+					if let users = game.users {
+						if !game.isSeeker {
+							if let seeker = game.seeker {
+								HStack(spacing: 0) {
+									Text(seeker.name)
+									Spacer(minLength: 8)
+									Text("Seeker")
+										.bold()
+										.foregroundColor(.red)
+								}
+							}
+							HStack(spacing: 0) {
+								Text(game.name)
+								Text(" (you)")
+									.opacity(0.7)
+								Spacer(minLength: 8)
+								Text(game.found ? "Found" : "Hidden")
+									.bold()
+									.foregroundColor(game.found ? .red : .green)
+							}
 						}
+						ForEach(game.isSeeker ? users : users.filter(game.isHider)) { user in
+							HStack(spacing: 0) {
+								Text(user.name)
+								Spacer(minLength: 8)
+								HStack {
+									if game.isSeeker && !user.pinged && !user.found {
+										Button { self.game.ping(user) } label: {
+											Text("Ping")
+												.bold()
+												.padding(.horizontal, 10)
+												.padding(.vertical, 4)
+												.background(Color(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)))
+												.cornerRadius(8)
+										}
+									}
+									if game.isSeeker && !user.found {
+										Button { self.game.find(user) } label: {
+											Text("Mark as found")
+												.bold()
+												.padding(.horizontal, 10)
+												.padding(.vertical, 4)
+												.background(Color.red)
+												.cornerRadius(8)
+										}
+									} else {
+										Text(user.found ? "Found" : "Hidden")
+											.bold()
+											.foregroundColor(
+												(game.isSeeker ? !user.found : user.found) ? .red : .green
+											)
+									}
+								}
+							}
+						}
+					} else {
+						Text("Loading...")
 					}
-				} else {
-					Text("Loading...")
 				}
+				.padding(.top, 12)
 			}
-			.padding(.vertical, 12)
-			Button(action: game.toggleReady) {
-				Text(game.ready ? "Ready" : "Not ready")
-					.padding(.horizontal, 20)
-					.padding(.vertical, 8)
-					.font(.system(size: 16, weight: .bold))
-					.background(game.ready ? Color.green : Color.red)
-					.cornerRadius(8)
-			}
-			.disabled(game.users == nil)
-			.opacity(game.users == nil ? 0.7 : 1)
 		}
 	}
 }
