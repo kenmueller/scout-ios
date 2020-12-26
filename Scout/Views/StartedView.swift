@@ -12,7 +12,7 @@ struct StartedView: View {
 			)
 			.font(.title)
 			.bold()
-			.foregroundColor(game.isSeeker ? .red : .green)
+			.foregroundColor(game.isSeeker || game.found ? .red : .green)
 			if let seconds = game.countdownSecondsRemaining {
 				Text(String(seconds))
 					.font(.largeTitle)
