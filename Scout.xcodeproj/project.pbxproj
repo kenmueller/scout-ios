@@ -14,6 +14,7 @@
 		4D275AD92596ADEF00117C9E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D275AD82596ADEF00117C9E /* RootView.swift */; };
 		4D275ADB2596ADF000117C9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D275ADA2596ADF000117C9E /* Assets.xcassets */; };
 		4D275ADE2596ADF000117C9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D275ADD2596ADF000117C9E /* Preview Assets.xcassets */; };
+		4D32765E259953340035C94D /* Socket in Frameworks */ = {isa = PBXBuildFile; productRef = 4D32765D259953340035C94D /* Socket */; };
 		4DB9578C2597F25400F01792 /* Ping.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4DB9578B2597F25400F01792 /* Ping.mp3 */; };
 		4DBDEF322596AFBD00CADC4C /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF312596AFBD00CADC4C /* Game.swift */; };
 		4DBDEF462596B0A600CADC4C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDEF452596B0A600CADC4C /* User.swift */; };
@@ -49,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D04FE7D259707FD00F41205 /* Audio in Frameworks */,
+				4D32765E259953340035C94D /* Socket in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,7 @@
 			name = Scout;
 			packageProductDependencies = (
 				4D04FE7C259707FD00F41205 /* Audio */,
+				4D32765D259953340035C94D /* Socket */,
 			);
 			productName = Scout;
 			productReference = 4D275AD32596ADEF00117C9E /* Scout.app */;
@@ -173,6 +176,7 @@
 			mainGroup = 4D275ACA2596ADEF00117C9E;
 			packageReferences = (
 				4D04FE7B259707FD00F41205 /* XCRemoteSwiftPackageReference "Audio" */,
+				4D32765C259953340035C94D /* XCRemoteSwiftPackageReference "socket-client" */,
 			);
 			productRefGroup = 4D275AD42596ADEF00117C9E /* Products */;
 			projectDirPath = "";
@@ -410,6 +414,14 @@
 				kind = branch;
 			};
 		};
+		4D32765C259953340035C94D /* XCRemoteSwiftPackageReference "socket-client" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kenmueller/socket-client";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -417,6 +429,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4D04FE7B259707FD00F41205 /* XCRemoteSwiftPackageReference "Audio" */;
 			productName = Audio;
+		};
+		4D32765D259953340035C94D /* Socket */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D32765C259953340035C94D /* XCRemoteSwiftPackageReference "socket-client" */;
+			productName = Socket;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

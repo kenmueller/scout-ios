@@ -14,7 +14,7 @@ struct InitialView: View {
 				.background(Color.white.opacity(0.1))
 				.cornerRadius(8)
 				.padding(.vertical, 12)
-			Button(action: game.join) {
+			Button(action: game.connect) {
 				Text("Next")
 					.bold()
 					.padding(.horizontal, 20)

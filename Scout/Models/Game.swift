@@ -1,21 +1,58 @@
 import Foundation
 import Combine
+import Socket
 import Audio
 
 final class Game: ObservableObject {
-	struct Start: Decodable {
+	struct Query: SocketQuery {
+		let id: UUID
+		let name: String
+	}
+	
+	struct Start: SocketMessage {
+		static let id = "start"
+		
 		let seeker: UUID
 	}
 	
-	struct RestartRequest: Encodable {
-		let restart = true
+	struct Restart: SocketMessage {
+		static let id = "restart"
 	}
 	
-	struct RestartResponse: Decodable {
-		let restart: Bool
+	struct Ready: SocketMessage {
+		static let id = "ready"
+		
+		let ready: Bool
+	}
+	
+	struct Ping: SocketMessage {
+		static let id = "ping"
+		
+		let id: UUID
+	}
+	
+	struct Pinged: SocketMessage {
+		static let id = "pinged"
+	}
+	
+	struct Find: SocketMessage {
+		static let id = "find"
+		
+		let id: UUID
+	}
+	
+	struct Found: SocketMessage {
+		static let id = "found"
+	}
+	
+	struct Users: SocketMessage {
+		static let id = "users"
+		
+		let users: [User]
 	}
 	
 	let id = UUID()
+	let socket = Socket(url: URL(string: API_URL)!)
 	
 	@Published private(set) var state = State.initial
 	
@@ -26,10 +63,10 @@ final class Game: ObservableObject {
 	}
 	@Published private(set) var ready = false {
 		didSet {
-			do {
-				try sendReady()
-			} catch {
-				print(error)
+			guard socket.isConnected else { return }
+			
+			socket.send(Ready(ready: ready)) {
+				handle(error: $0)
 			}
 		}
 	}
@@ -39,12 +76,6 @@ final class Game: ObservableObject {
 	@Published private(set) var seekerId: UUID?
 	
 	@Published private(set) var countdownSecondsRemaining: Int?
-	
-	private var task: URLSessionWebSocketTask?
-	
-	deinit {
-		leave()
-	}
 	
 	var isSeeker: Bool {
 		id == seekerId
@@ -59,51 +90,57 @@ final class Game: ObservableObject {
 		isSeeker && users?.allSatisfy(\.found) ?? false
 	}
 	
+	init() {
+		socket.on { (users: Users) in
+			self.users = users.users
+		}
+		
+		socket.on { (start: Start) in
+			self.state = .started
+			self.seekerId = start.seeker
+			
+			self.startCountdown()
+		}
+		
+		socket.on { (_: Pinged) in
+			Audio.shared.play(fileNamed: "Ping.mp3")
+		}
+		
+		socket.on { (_: Found) in
+			self.found = true
+		}
+		
+		socket.on { (_: Restart) in
+			self.state = .joined
+			self.ready = false
+			self.found = false
+		}
+	}
+	
+	deinit {
+		disconnect()
+	}
+	
 	func isHider(_ user: User) -> Bool {
 		user.id != seekerId
 	}
 	
-	func join() {
-		guard task == nil, let url = URL(string: API_URL) else { return }
-		
-		state = .joined
-		ready = false
-		
-		task = URLSession.shared.webSocketTask(with: url)
-		
-		task?.receive(completionHandler: onReceive)
-		task?.resume()
-		
+	func connect() {
 		do {
-			ping()
-			try sendInit()
-		} catch {
-			print(error)
-		}
-	}
-	
-	func ping() {
-		var timer: Timer?
-		
-		timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
-			guard let task = self?.task else {
-				timer?.invalidate()
-				return
-			}
+			state = .joined
+			ready = false
 			
-			task.sendPing { error in
-				guard let error = error else { return }
-				print(error)
-			}
+			try socket.connect(query: Query(id: id, name: name))
+		} catch {
+			handle(error: error)
 		}
 	}
 	
-	func leave() {
-		task?.cancel()
-		task = nil
-		
+	func disconnect() {
 		state = .initial
 		ready = false
+		
+		socket.disconnect()
 	}
 	
 	func toggleReady() {
@@ -136,80 +173,26 @@ final class Game: ObservableObject {
 	}
 	
 	func ping(_ user: User) {
-		do {
-			try send(User.Ping(id: user.id))
-		} catch {
-			print(error)
+		guard socket.isConnected else { return }
+		
+		socket.send(Ping(id: user.id)) {
+			handle(error: $0)
 		}
 	}
 	
 	func find(_ user: User) {
-		do {
-			try send(User.Find(id: user.id))
-		} catch {
-			print(error)
+		guard socket.isConnected else { return }
+		
+		socket.send(Find(id: user.id)) {
+			handle(error: $0)
 		}
 	}
 	
 	func restart() {
-		do {
-			try send(RestartRequest())
-		} catch {
-			print(error)
-		}
-	}
-	
-	func onRestart() {
-		state = .joined
-		ready = false
-		found = false
-	}
-	
-	func onReceive(_ result: Result<URLSessionWebSocketTask.Message, Error>) {
-		task?.receive(completionHandler: onReceive)
+		guard socket.isConnected else { return }
 		
-		switch result {
-		case let .success(message): onMessage(message)
-		case let .failure(error): print(error)
+		socket.send(Restart()) {
+			handle(error: $0)
 		}
-	}
-	
-	func onMessage(_ message: URLSessionWebSocketTask.Message) {
-		guard case let .data(data) = message else {
-			print("Invalid message")
-			return
-		}
-		
-		if let users = try? decoder.decode(User.Users.self, from: data).users {
-			DispatchQueue.main.async { self.users = users }
-		} else if let seekerId = try? decoder.decode(Start.self, from: data).seeker {
-			DispatchQueue.main.async {
-				self.state = .started
-				self.seekerId = seekerId
-				
-				self.startCountdown()
-			}
-		} else if (try? decoder.decode(User.Pinged.self, from: data)) != nil {
-			Audio.shared.play(fileNamed: "Ping.mp3")
-		} else if (try? decoder.decode(User.Found.self, from: data)) != nil {
-			DispatchQueue.main.async { self.found = true }
-		} else if (try? decoder.decode(RestartResponse.self, from: data)) != nil {
-			DispatchQueue.main.async(execute: onRestart)
-		}
-	}
-	
-	func send<Data: Encodable>(_ data: Data) throws {
-		task?.send(.data(try encoder.encode(data))) { error in
-			guard let error = error else { return }
-			print(error)
-		}
-	}
-	
-	func sendInit() throws {
-		try send(User.Init(id: id, name: name))
-	}
-	
-	func sendReady() throws {
-		try send(User.Ready(ready))
 	}
 }

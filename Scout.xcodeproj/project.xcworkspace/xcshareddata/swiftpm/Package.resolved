@@ -9,6 +9,15 @@
           "revision": "c0b7ea48b42d18849179ad6fda6ca7a79a88cebd",
           "version": null
         }
+      },
+      {
+        "package": "socket",
+        "repositoryURL": "https://github.com/kenmueller/socket-client",
+        "state": {
+          "branch": null,
+          "revision": "2171e44e5655e962509fb45997d77586cce32c4d",
+          "version": "1.0.3"
+        }
       }
     ]
   },
